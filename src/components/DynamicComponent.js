@@ -1,9 +1,11 @@
 'use strict'
 
+const Container = require('../Container')
+
 module.exports = class DynamicComponent {
   constructor(factory, context) {
     this.factory = factory
-    this.context = context
+    this.context = context || new Container()
   }
 
   instantiate() {

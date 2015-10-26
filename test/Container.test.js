@@ -36,8 +36,8 @@ suite('Container', () => {
       storeResult.should.equal(container)
     })
 
-    test('throws error when trying to access missing values', () => {
-      container.get.bind(container, 'unknown').should.throw(/unknown.*not.*found/i)
+    test('returns nothing when trying to access missing values', () => {
+      should.not.exist(container.get('unknown'))
     })
   })
 
@@ -72,6 +72,11 @@ suite('Container', () => {
       container.define('factory', context => context.value, context)
       context.store('value', someObject)
       container.get('factory').should.equal(someObject)
+    })
+
+    test('assumes empty context if none given', () => {
+      container.define('factory', context => context.value)
+      container.get.bind(container, 'factory').should.not.throw
     })
   })
 })
