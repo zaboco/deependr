@@ -1,18 +1,21 @@
 'use strict'
 
+const StaticComponent = require('./components/StaticComponent')
+const DynamicComponent = require('./components/DynamicComponent')
+
 module.exports = class Container {
   constructor() {
     this.components = {}
   }
 
   store(field, value) {
-    this.components[field] = { value, type: 'value' }
+    this.components[field] = new StaticComponent(value)
     this._defineGetter(field)
     return this
   }
 
   define(field, factory, context) {
-    this.components[field] = { factory, context, type: 'factory' }
+    this.components[field] = new DynamicComponent(factory, context)
     this._defineGetter(field)
     return this
   }
@@ -26,10 +29,6 @@ module.exports = class Container {
 
   get(field) {
     let component = this.components[field]
-    if (component.type === 'value') {
-      return component.value
-    } else {
-      return component.factory(component.context)
-    }
+    return component.instantiate()
   }
 }
