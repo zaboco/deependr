@@ -10,19 +10,20 @@ module.exports = class Container {
   }
 
   store(key, value) {
-    this.components[key] = new StaticComponent(value)
-    this._defineGetter(key)
-    return this
+    return this._addComponent(key, new StaticComponent(value))
   }
 
   define(key, factory, context) {
-    this.components[key] = new DynamicComponent(factory, context)
-    this._defineGetter(key)
-    return this
+    return this._addComponent(key, new DynamicComponent(factory, context))
+  }
+
+  _addComponent(key, component) {
+    this.components[key] = component
+    return this._defineGetter(key)
   }
 
   _defineGetter(key) {
-    Object.defineProperty(this, key, {
+    return Object.defineProperty(this, key, {
       get: () => this.get(key),
       configurable: true
     })
