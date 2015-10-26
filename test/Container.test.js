@@ -62,5 +62,12 @@ suite('Container', () => {
       container.define('factory', context => context.value, context)
       container.get('factory').should.equal(someObject)
     })
+
+    test('context values can be set after the factory is defined', () => {
+      let context = new Container()
+      container.define('factory', context => context.value, context)
+      context.store('value', someObject)
+      container.get('factory').should.equal(someObject)
+    })
   })
 })
