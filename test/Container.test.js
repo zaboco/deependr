@@ -35,6 +35,10 @@ suite('Container', () => {
       let storeResult = container.store('value', someObject)
       storeResult.should.equal(container)
     })
+
+    test('throws error when trying to access missing values', () => {
+      container.get.bind(container, 'unknown').should.throw(/unknown.*not.*found/i)
+    })
   })
 
   suite('#define', () => {

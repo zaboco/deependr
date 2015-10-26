@@ -2,33 +2,34 @@
 
 const StaticComponent = require('./components/StaticComponent')
 const DynamicComponent = require('./components/DynamicComponent')
+const MissingComponent = require('./components/MissingComponent')
 
 module.exports = class Container {
   constructor() {
     this.components = {}
   }
 
-  store(field, value) {
-    this.components[field] = new StaticComponent(value)
-    this._defineGetter(field)
+  store(key, value) {
+    this.components[key] = new StaticComponent(value)
+    this._defineGetter(key)
     return this
   }
 
-  define(field, factory, context) {
-    this.components[field] = new DynamicComponent(factory, context)
-    this._defineGetter(field)
+  define(key, factory, context) {
+    this.components[key] = new DynamicComponent(factory, context)
+    this._defineGetter(key)
     return this
   }
 
-  _defineGetter(field) {
-    Object.defineProperty(this, field, {
-      get: () => this.get(field),
+  _defineGetter(key) {
+    Object.defineProperty(this, key, {
+      get: () => this.get(key),
       configurable: true
     })
   }
 
-  get(field) {
-    let component = this.components[field]
+  get(key) {
+    let component = this.components[key] || new MissingComponent(key)
     return component.instantiate()
   }
 }
