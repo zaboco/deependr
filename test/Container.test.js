@@ -36,4 +36,31 @@ suite('Container', () => {
       storeResult.should.equal(container)
     })
   })
+
+  suite('#define', () => {
+    setup(() => {
+      container = new Container()
+    })
+
+    test('can define factories', () => {
+      container.define('factory', () => someObject)
+      container.get('factory').should.equal(someObject)
+    })
+
+    test('computed value is accessible as a getter accessor', () => {
+      container.define('factory', () => someObject)
+      container.factory.should.equal(someObject)
+    })
+
+    test('returns the container itself', () => {
+      let storeResult = container.define('someFactory', () => {})
+      storeResult.should.equal(container)
+    })
+
+    test('factories can use another container as context', () => {
+      let context = new Container().store('value', someObject)
+      container.define('factory', context => context.value, context)
+      container.get('factory').should.equal(someObject)
+    })
+  })
 })

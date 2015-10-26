@@ -6,6 +6,11 @@ module.exports = class Container {
     return this
   }
 
+  define(field, factory, context) {
+    this[field] = factory(context)
+    return this
+  }
+
   get(field) {
     return this[field]
   }
