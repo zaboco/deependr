@@ -1,19 +1,16 @@
 'use strict'
 
 const Container = require('../src/Container')
+const components = require('../src/components')
 
 suite('Container', () => {
-  test('exists', () => {
-    should.exist(Container)
-  })
-
   const someObject = {}
   let container
-  suite('#store', () => {
-    setup(() => {
-      container = new Container()
-    })
+  setup(() => {
+    container = new Container()
+  })
 
+  suite('#store', () => {
     test('can store values', () => {
       container.store('value', someObject)
       container.get('value').should.equal(someObject)
@@ -42,10 +39,6 @@ suite('Container', () => {
   })
 
   suite('#define', () => {
-    setup(() => {
-      container = new Container()
-    })
-
     test('can define factories', () => {
       container.define('factory', () => someObject)
       container.get('factory').should.equal(someObject)
@@ -179,6 +172,17 @@ suite('Container', () => {
         container.get('factory').should.equal(someObject)
       })
     })
+  })
 
+  suite('#set', () => {
+    test('a component', () => {
+      container.set('value', components.value(someObject))
+      container.get('value').should.equal(someObject)
+    })
+
+    test('will make a component otu of a value', () => {
+      container.set('value', someObject)
+      container.get('value').should.equal(someObject)
+    })
   })
 })

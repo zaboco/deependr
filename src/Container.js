@@ -13,6 +13,13 @@ function makeContainer() {
       this.components = {}
     }
 
+    set(key, component) {
+      if (!component || !component.instantiate) {
+        component = new StaticComponent(component)
+      }
+      return this._addComponent(key, component)
+    }
+
     store(key, value) {
       return this._addComponent(key, new StaticComponent(value))
     }
