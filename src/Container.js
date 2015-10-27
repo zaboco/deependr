@@ -21,8 +21,8 @@ function makeContainer() {
       return this._addComponent(key, new DynamicComponent(factory, context))
     }
 
-    link(key, targetKey) {
-      return this._addComponent(key, new LinkedComponent(this, targetKey))
+    link(key, targetKey, context) {
+      return this._addComponent(key, new LinkedComponent(context || this, targetKey))
     }
 
     _addComponent(key, component) {

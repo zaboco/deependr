@@ -170,5 +170,15 @@ suite('Container', () => {
         container.get('secondLink').should.equal(someObject)
       })
     })
+
+    suite('called from a factory context', () => {
+      test('points to the component from the root container', () => {
+        container.define('factory', context => context.value, new Container())
+        container.store('topLevelValue', someObject)
+        container.unwrap('factory').link('value', 'topLevelValue', container)
+        container.get('factory').should.equal(someObject)
+      })
+    })
+
   })
 })
