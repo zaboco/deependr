@@ -174,6 +174,19 @@ suite('Container', () => {
     })
   })
 
+  suite('#nest', () => {
+    test('inserts another container into the current one', () => {
+      let nestedContainer = new Container().set('value', someObject)
+      container.nest('nested', nestedContainer)
+      container.get('nested').get('value').should.equal(someObject)
+    })
+
+    test('unwrap nested container accesses the container itself', () => {
+      container.nest('nested', new Container()).unwrap('nested').set('value', someObject)
+      container.nested.value.should.equal(someObject)
+    })
+  })
+
   suite('#set', () => {
     test('a component', () => {
       container.set('value', components.value(someObject))

@@ -14,6 +14,10 @@ function makeContainer() {
       return this._addComponent(key, components.coerce(component))
     }
 
+    nest(key, container) {
+      return this._addComponent(key, components.container(container))
+    }
+
     store(key, value) {
       return this._addComponent(key, components.value(value))
     }
