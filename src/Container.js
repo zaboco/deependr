@@ -6,8 +6,11 @@ const components = require('./components')
 
 function makeContainer() {
   return class Container {
-    constructor() {
+    constructor(components) {
       this.components = {}
+      Object.keys(components || {}).forEach(key => {
+        this.set(key, components[key])
+      })
     }
 
     set(key, component) {

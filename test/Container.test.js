@@ -198,4 +198,19 @@ suite('Container', () => {
       container.get('value').should.equal(someObject)
     })
   })
+
+  suite('constructor sets all received components', () => {
+    test('for one level nesting', () => {
+      let prefilledContainer = new Container({ value: someObject })
+      prefilledContainer.get('value').should.equal(someObject)
+    })
+
+    test('for two level nesting', () => {
+      let nestedContainer = new Container({ value: someObject })
+      let prefilledContainer = new Container({
+        nested: nestedContainer
+      })
+      prefilledContainer.get('nested').get('value').should.equal(someObject)
+    })
+  })
 })
