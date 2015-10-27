@@ -1,8 +1,10 @@
 'use strict'
 
+const Container = require('../Container')
+
 module.exports = class ContainerComponent {
   constructor(container) {
-    this.container = container
+    this.container = Container.coerce(container)
   }
 
   instantiate() {

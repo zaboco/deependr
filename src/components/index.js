@@ -1,5 +1,7 @@
 'use strict'
 
+const isPlainObject = require('lodash.isplainobject')
+
 const StaticComponent = require('./StaticComponent')
 const DynamicComponent = require('./DynamicComponent')
 const LinkedComponent = require('./LinkedComponent')
@@ -36,11 +38,16 @@ function makeMissingComponent(key) {
 }
 
 function coerce(component) {
-  return _isComponent(component) ?
-    component :
-    makeStaticComponent(component)
+  switch (true) {
+    case _isComponent(component):
+      return component
+    case isPlainObject(component):
+      return makeContainerComponent(component)
+    default:
+      return makeStaticComponent(component)
+  }
 }
 
 function _isComponent(component) {
-  return component && component.instantiate && component.unwrap
+  return component && component.instantiate && component.unwrap && true
 }

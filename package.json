@@ -34,5 +34,8 @@
     "ghooks": "^0.3.2",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.3"
+  },
+  "dependencies": {
+    "lodash.isplainobject": "^3.2.0"
   }
 }

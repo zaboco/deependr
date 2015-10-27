@@ -72,5 +72,13 @@ function makeContainer() {
     _getComponent(key) {
       return this.components[key] || components.missing(key)
     }
+
+    static coerce(container) {
+      if (container instanceof Container) {
+        return container
+      } else {
+        return new Container(container)
+      }
+    }
   }
 }
