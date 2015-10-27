@@ -8,32 +8,36 @@ function makeContainer() {
   return class Container {
     constructor(components) {
       this.components = {}
+      this.setAll(components)
+    }
+
+    setAll(components) {
       Object.keys(components || {}).forEach(key => {
         this.set(key, components[key])
       })
     }
 
     set(key, component) {
-      return this._addComponent(key, components.coerce(component))
+      return this._setComponent(key, components.coerce(component))
     }
 
     nest(key, container) {
-      return this._addComponent(key, components.container(container))
+      return this._setComponent(key, components.container(container))
     }
 
     store(key, value) {
-      return this._addComponent(key, components.value(value))
+      return this._setComponent(key, components.value(value))
     }
 
     define(key, factory, context) {
-      return this._addComponent(key, components.factory(factory, context))
+      return this._setComponent(key, components.factory(factory, context))
     }
 
     link(key, targetKey, context) {
-      return this._addComponent(key, components.link(context || this, targetKey))
+      return this._setComponent(key, components.link(context || this, targetKey))
     }
 
-    _addComponent(key, component) {
+    _setComponent(key, component) {
       this.components[key] = component
       return this._defineGetter(key)
     }
