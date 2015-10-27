@@ -2,10 +2,7 @@
 
 module.exports = makeContainer()
 
-const StaticComponent = require('./components/StaticComponent')
-const DynamicComponent = require('./components/DynamicComponent')
-const MissingComponent = require('./components/MissingComponent')
-const LinkedComponent = require('./components/LinkedComponent')
+const components = require('./components')
 
 function makeContainer() {
   return class Container {
@@ -14,22 +11,19 @@ function makeContainer() {
     }
 
     set(key, component) {
-      if (!component || !component.instantiate) {
-        component = new StaticComponent(component)
-      }
-      return this._addComponent(key, component)
+      return this._addComponent(key, components.coerce(component))
     }
 
     store(key, value) {
-      return this._addComponent(key, new StaticComponent(value))
+      return this._addComponent(key, components.value(value))
     }
 
     define(key, factory, context) {
-      return this._addComponent(key, new DynamicComponent(factory, context))
+      return this._addComponent(key, components.factory(factory, context))
     }
 
     link(key, targetKey, context) {
-      return this._addComponent(key, new LinkedComponent(context || this, targetKey))
+      return this._addComponent(key, components.link(context || this, targetKey))
     }
 
     _addComponent(key, component) {
@@ -69,7 +63,7 @@ function makeContainer() {
     }
 
     _getComponent(key) {
-      return this.components[key] || new MissingComponent(key)
+      return this.components[key] || components.missing(key)
     }
   }
 }

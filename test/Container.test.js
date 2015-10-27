@@ -180,7 +180,7 @@ suite('Container', () => {
       container.get('value').should.equal(someObject)
     })
 
-    test('will make a component otu of a value', () => {
+    test('will make a component out of a value', () => {
       container.set('value', someObject)
       container.get('value').should.equal(someObject)
     })
