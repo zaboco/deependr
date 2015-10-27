@@ -137,10 +137,31 @@ suite('Container', () => {
   })
 
   suite('#link', () => {
-    test('called on container points to a component from itself', () => {
-      container.store('value', someObject)
-      container.link('valueLink', 'value')
-      container.get('valueLink').should.equal(someObject)
+    suite('called on container', () => {
+      test('for a value returns the target value', () => {
+        container.store('value', someObject)
+        container.link('valueLink', 'value')
+        container.get('valueLink').should.equal(someObject)
+      })
+
+      test('for a factory call the target factory', () => {
+        container.define('factory', () => someObject)
+        container.link('factoryLink', 'factory')
+        container.get('factoryLink').should.equal(someObject)
+      })
+
+      test('for a value unwraps to the value itself', () => {
+        container.store('value', someObject)
+        container.link('valueLink', 'value')
+        container.unwrap('valueLink').should.equal(someObject)
+      })
+
+      test('for a factory unwraps to the factory`s context', () => {
+        let context = new Container()
+        container.define('factory', () => {}, context)
+        container.link('factoryLink', 'factory')
+        container.unwrap('factoryLink').should.equal(context)
+      })
     })
   })
 })

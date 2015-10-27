@@ -11,5 +11,6 @@ module.exports = class LinkedComponent {
   }
 
   unwrap() {
+    return this.container.unwrap(this.targetKey)
   }
 }
