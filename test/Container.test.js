@@ -135,4 +135,12 @@ suite('Container', () => {
       should.not.exist(container.unwrapPath())
     })
   })
+
+  suite('#link', () => {
+    test('called on container points to a component from itself', () => {
+      container.store('value', someObject)
+      container.link('valueLink', 'value')
+      container.get('valueLink').should.equal(someObject)
+    })
+  })
 })

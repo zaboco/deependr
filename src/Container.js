@@ -5,6 +5,7 @@ module.exports = makeContainer()
 const StaticComponent = require('./components/StaticComponent')
 const DynamicComponent = require('./components/DynamicComponent')
 const MissingComponent = require('./components/MissingComponent')
+const LinkedComponent = require('./components/LinkedComponent')
 
 function makeContainer() {
   return class Container {
@@ -18,6 +19,10 @@ function makeContainer() {
 
     define(key, factory, context) {
       return this._addComponent(key, new DynamicComponent(factory, context))
+    }
+
+    link(key, targetKey) {
+      return this._addComponent(key, new LinkedComponent(this, targetKey))
     }
 
     _addComponent(key, component) {
