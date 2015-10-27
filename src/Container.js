@@ -36,5 +36,10 @@ function makeContainer() {
       let component = this.components[key] || new MissingComponent(key)
       return component.instantiate()
     }
+
+    unwrap(key) {
+      let component = this.components[key] || new MissingComponent(key)
+      return component.unwrap()
+    }
   }
 }

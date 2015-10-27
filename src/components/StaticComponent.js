@@ -8,4 +8,8 @@ module.exports = class StaticComponent {
   instantiate() {
     return this.value
   }
+
+  unwrap() {
+    return this.value
+  }
 }

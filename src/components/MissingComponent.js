@@ -3,4 +3,7 @@
 module.exports = class MissingComponent {
   instantiate() {
   }
+
+  unwrap() {
+  }
 }

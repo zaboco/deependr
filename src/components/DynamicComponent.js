@@ -11,4 +11,8 @@ module.exports = class DynamicComponent {
   instantiate() {
     return this.factory(this.context)
   }
+
+  unwrap() {
+    return this.context
+  }
 }

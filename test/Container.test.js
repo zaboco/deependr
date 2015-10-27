@@ -79,4 +79,28 @@ suite('Container', () => {
       container.get.bind(container, 'factory').should.not.throw
     })
   })
+
+  suite('#unwrap', () => {
+    test('extracts the context from a factory component', () => {
+      let context = new Container()
+      container.define('factory', context => context.value, context)
+      container.unwrap('factory').should.equal(context)
+    })
+
+    test('modifying the extracted context works', () => {
+      container
+        .define('factory', context => context.value, new Container())
+        .unwrap('factory').store('value', someObject)
+      container.get('factory').should.equal(someObject)
+    })
+
+    test('returns the value itself for a value component', () => {
+      container.store('value', someObject)
+      container.unwrap('value').should.equal(someObject)
+    })
+
+    test('returns nothing for a missing component', () => {
+      should.not.exist(container.unwrap('unknown'))
+    })
+  })
 })
