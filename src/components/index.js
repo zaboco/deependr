@@ -1,6 +1,7 @@
 'use strict'
 
 const isPlainObject = require('lodash.isplainobject')
+const getPath = require('lodash.get')
 
 const StaticComponent = require('./StaticComponent')
 const DynamicComponent = require('./DynamicComponent')
@@ -28,7 +29,7 @@ function makeDynamicComponent(factory, context) {
 
 function PredefinedComponentBuilder(implementations) {
   return function PredefinedComponent(implementationName, context) {
-    let implementation = implementations[implementationName]
+    let implementation = getPath(implementations, implementationName)
     return makeDynamicComponent(implementation, context)
   }
 }

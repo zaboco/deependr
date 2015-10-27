@@ -14,6 +14,17 @@ suite('components', () => {
     component.instantiate().should.equal(someValue)
   })
 
+  test('factory.predefinedFrom for nested path', () => {
+    const implementations = {
+      nested: {
+        standard: context => context.value
+      }
+    }
+    let factory = components.factory.predefinedFrom(implementations)
+    let component = factory('nested.standard', { value: someValue })
+    component.instantiate().should.equal(someValue)
+  })
+
   test('link.boundTo', () => {
     let container = new Container({ value: someValue })
     let boundLink = components.link.boundTo(container)

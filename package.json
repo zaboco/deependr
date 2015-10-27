@@ -36,6 +36,7 @@
     "mocha": "^2.3.3"
   },
   "dependencies": {
+    "lodash.get": "^3.7.0",
     "lodash.isplainobject": "^3.2.0"
   }
 }
