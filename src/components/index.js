@@ -21,8 +21,16 @@ function makeStaticComponent(value) {
   return new StaticComponent(value)
 }
 
+makeDynamicComponent.predefinedFrom = PredefinedComponentBuilder
 function makeDynamicComponent(factory, context) {
   return new DynamicComponent(factory, context)
+}
+
+function PredefinedComponentBuilder(implementations) {
+  return function PredefinedComponent(implementationName, context) {
+    let implementation = implementations[implementationName]
+    return makeDynamicComponent(implementation, context)
+  }
 }
 
 function makeLinkedComponent(context, targetKey) {
