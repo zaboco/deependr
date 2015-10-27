@@ -33,13 +33,15 @@ function makeContainer() {
     }
 
     get(key) {
-      let component = this.components[key] || new MissingComponent(key)
-      return component.instantiate()
+      return this._getComponent(key).instantiate()
     }
 
     unwrap(key) {
-      let component = this.components[key] || new MissingComponent(key)
-      return component.unwrap()
+      return this._getComponent(key).unwrap()
+    }
+
+    _getComponent(key) {
+      return this.components[key] || new MissingComponent(key)
     }
   }
 }
