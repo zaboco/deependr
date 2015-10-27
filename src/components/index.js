@@ -33,8 +33,15 @@ function PredefinedComponentBuilder(implementations) {
   }
 }
 
+makeLinkedComponent.boundTo = BoundLinkBuilder
 function makeLinkedComponent(context, targetKey) {
   return new LinkedComponent(context, targetKey)
+}
+
+function BoundLinkBuilder(container) {
+  return function BoundLink(targetKey) {
+    return makeLinkedComponent(container, targetKey)
+  }
 }
 
 function makeContainerComponent(container) {
