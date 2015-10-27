@@ -102,5 +102,37 @@ suite('Container', () => {
     test('returns nothing for a missing component', () => {
       should.not.exist(container.unwrap('unknown'))
     })
+
+    test('returns nothing key is not provided', () => {
+      should.not.exist(container.unwrap())
+    })
+  })
+
+  suite('#unwrapPath', () => {
+    test('acts like unwrap if given a one-key path', () => {
+      container.store('value', someObject)
+      container.unwrapPath('value').should.equal(someObject)
+    })
+
+    test('can access a path of two keys', () => {
+      let context = new Container().store('value', someObject)
+      container.define('factory', context => context.value, context)
+      container.unwrapPath('factory.value').should.equal(someObject)
+    })
+
+    test('can access a path of three keys', () => {
+      let bottomContext = new Container().store('value', someObject)
+      let middleContext = new Container().define('nestedFactory', context => context.value, bottomContext)
+      container.define('factory', context => context.nestedFactory, middleContext)
+      container.unwrapPath('factory.nestedFactory.value').should.equal(someObject)
+    })
+
+    test('returns nothing for empty path', () => {
+      should.not.exist(container.unwrapPath(''))
+    })
+
+    test('returns nothing if path is not provided', () => {
+      should.not.exist(container.unwrapPath())
+    })
   })
 })

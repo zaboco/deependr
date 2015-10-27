@@ -36,6 +36,22 @@ function makeContainer() {
       return this._getComponent(key).instantiate()
     }
 
+    unwrapPath(keysPath) {
+      keysPath = keysPath || ''
+      let keysChain = keysPath.split('.')
+      return this._unwrapKeyChain(keysChain)
+    }
+
+    _unwrapKeyChain(keysChain) {
+      let keysHead = keysChain[0], keysTail = keysChain.slice(1)
+      let topLevelContext = this.unwrap(keysHead)
+      if (keysChain.length === 1) {
+        return topLevelContext
+      } else {
+        return topLevelContext._unwrapKeyChain(keysTail)
+      }
+    }
+
     unwrap(key) {
       return this._getComponent(key).unwrap()
     }
