@@ -5,7 +5,7 @@ const Container = require('../Container')
 module.exports = class DynamicComponent {
   constructor(factory, context) {
     this.factory = factory
-    this.context = context || new Container()
+    this.context = Container.coerce(context)
   }
 
   instantiate() {

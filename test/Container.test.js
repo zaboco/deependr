@@ -71,6 +71,11 @@ suite('Container', () => {
       container.define('factory', context => context.value)
       container.get.bind(container, 'factory').should.not.throw
     })
+
+    test('context is converted into an actual Container if plain object', () => {
+      container.define('factory', context => context.value, { value: someValue })
+      container.get('factory').should.equal(someValue)
+    })
   })
 
   suite('#unwrap', () => {
