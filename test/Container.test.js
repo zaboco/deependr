@@ -137,7 +137,7 @@ suite('Container', () => {
   })
 
   suite('#link', () => {
-    suite('called on container', () => {
+    suite('called from container', () => {
       test('for a value returns the target value', () => {
         container.store('value', someObject)
         container.link('valueLink', 'value')
@@ -161,6 +161,13 @@ suite('Container', () => {
         container.define('factory', () => {}, context)
         container.link('factoryLink', 'factory')
         container.unwrap('factoryLink').should.equal(context)
+      })
+
+      test('can link recursively', () => {
+        container.store('value', someObject)
+        container.link('firstLink', 'value')
+        container.link('secondLink', 'firstLink')
+        container.get('secondLink').should.equal(someObject)
       })
     })
   })
