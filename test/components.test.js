@@ -30,4 +30,9 @@ suite('components', () => {
     let boundLink = components.link.boundTo(container)
     boundLink('value').instantiate().should.equal(someValue)
   })
+
+  test('link.boundTo converts context to Container if needed', () => {
+    let boundLink = components.link.boundTo({ value: someValue })
+    boundLink('value').instantiate().should.equal(someValue)
+  })
 })

@@ -1,8 +1,10 @@
 'use strict'
 
+const Container = require('../Container')
+
 module.exports = class LinkedComponent {
   constructor(container, targetKey) {
-    this.container = container
+    this.container = Container.coerce(container)
     this.targetKey = targetKey
   }
 
