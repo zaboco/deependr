@@ -1,6 +1,6 @@
 {
   "name": "deependr",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Nested dependency injection engine",
   "main": "index.js",
   "scripts": {
